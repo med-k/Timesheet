@@ -1,7 +1,5 @@
 package tn.spring.timesheet.entities;
 
-import java.util.List;
-
 public class EntrepriseDTO {
     private int id;
     private String name;
