@@ -27,5 +27,4 @@ public interface EmployeRepository extends JpaRepository<Employe, Integer> {
     @Query("UPDATE Employe e SET e.email=:email1 where e.id=:employeId")
     public void mettreAjourEmailByEmployeIdJPQL(@Param("email1")String email, @Param("employeId")int employeId);
 
-
 }
