@@ -2,7 +2,9 @@ package tn.spring.timesheet.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.spring.timesheet.Mapper;
 import tn.spring.timesheet.entities.Entreprise;
+import tn.spring.timesheet.entities.EntrepriseDTO;
 import tn.spring.timesheet.services.IEntrepriseService;
 import java.util.List;
 
@@ -13,14 +15,15 @@ public class RestControlEntreprise {
 
 
     private final IEntrepriseService ientrepriseservice;
+    private Mapper mapper;
 
 
     // http://localhost:8081/SpringMVC/servlet/ajouterEntreprise
     @PostMapping("/ajouterEntreprise")
     @ResponseBody
-    public Entreprise ajouterEntreprise(@RequestBody Entreprise entreprise) {
-        Entreprise addedEntreprise = ientrepriseservice.ajouterEntreprise(entreprise);
-        return addedEntreprise;
+    public Entreprise ajouterEntreprise(@RequestBody EntrepriseDTO entrepriseDTO) {
+        Entreprise entreprise = mapper.toEntreprise(entrepriseDTO);
+        return  ientrepriseservice.ajouterEntreprise(entreprise);
     }
 
     // http://localhost:8081/SpringMVC/servlet/geAllEntreprise
@@ -55,14 +58,14 @@ public class RestControlEntreprise {
     @GetMapping(value = "/getEntrepriseById/{id}")
     @ResponseBody
     public Entreprise getEntrepriseById(@PathVariable("id") int id) {
-        Entreprise entreprise = ientrepriseservice.getEntrepriseById(id);
-        return  entreprise;
+        return ientrepriseservice.getEntrepriseById(id);
     }
 
     // http://localhost:8081/SpringMVC/servlet/editEntreprise/1
     @PutMapping(value = "/editEntreprise/{id}")
     @ResponseBody
-    public Entreprise editEntrepriseById(@PathVariable("id") int id,@RequestBody Entreprise entreprise) {
+    public Entreprise editEntrepriseById(@PathVariable("id") int id,@RequestBody EntrepriseDTO entrepriseDTO) {
+        Entreprise entreprise = mapper.toEntreprise(entrepriseDTO);
         return  ientrepriseservice.editEntrepriseById(entreprise,id);
     }
 
@@ -70,8 +73,7 @@ public class RestControlEntreprise {
     @PutMapping(value = "/editEntrepriseNameById/{id}")
     @ResponseBody
     public Entreprise editEntrepriseNameById(@PathVariable("id") int id,@RequestBody String name) {
-        Entreprise entreprise = ientrepriseservice.editEntrepriseNameById(name,id);
-        return entreprise;
+        return ientrepriseservice.editEntrepriseNameById(name,id);
     }
 
     // http://localhost:8081/SpringMVC/servlet/deleteEntrepriseById/1

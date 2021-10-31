@@ -6,7 +6,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import tn.spring.timesheet.entities.Entreprise;
 import tn.spring.timesheet.repository.EntrepriseRepository;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -26,7 +29,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             logger.info("Out ajouterEntreprise with success");
             return addedEntreprise;
         }catch (Exception e){
-            logger.error("Error in ajouterEntreprise causedBy"+e.getMessage());
+            logger.error(e.getMessage());
             return null;
         }
     }
@@ -41,8 +44,8 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             logger.info("Out getAllEntreprise with success");
             return listEntreprise;
         }catch (Exception e){
-            logger.error("Error in getAllEntreprise causedBy"+e.getMessage());
-            return null;
+            logger.error(e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -56,7 +59,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             logger.info("Out getNombreEntreprise with success");
             return nbrEntreprise;
         }catch (Exception e){
-            logger.error("Error in getNombreEntreprise causedBy"+e.getMessage());
+            logger.error(e.getMessage());
             return 0;
         }
     }
@@ -71,8 +74,8 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             logger.info("Out getAllEntrepriseNames with success");
             return entrepriseList;
         }catch (Exception e){
-            logger.error("Error in getAllEntrepriseNames causedBy"+e.getMessage());
-            return null;
+            logger.error(e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -86,8 +89,8 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             logger.info("Out getAllEntrepriseByRaisonSocial with success");
             return entrepriseList;
         }catch (Exception e){
-            logger.error("Error in getAllEntrepriseByRaisonSocial causedBy"+e.getMessage());
-            return null;
+            logger.error(e.getMessage());
+            return new ArrayList<>();
         }
     }
 
@@ -96,12 +99,17 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
         logger.info("In getEntrepriseById");
 
         try {
-            logger.debug("getting entreprise by id");
-            Entreprise entreprise = entrepriseRepoistory.findById(entrepriseId).get();
-            logger.info("Out getEntrepriseById with success");
-            return entreprise;
+                logger.debug("getting entreprise by id");
+                Optional<Entreprise> value = entrepriseRepoistory.findById(entrepriseId);
+                if(value.isPresent()){
+                    Entreprise entreprise = value.get();
+                    logger.info("Out getEntrepriseById with success");
+                    return entreprise;
+                }else{
+                    return null;
+                }
         }catch (Exception e){
-            logger.error("Error in getEntrepriseById causedBy"+e.getMessage());
+            logger.error(e.getMessage());
             return null;
         }
     }
@@ -112,8 +120,9 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
 
         try {
             logger.debug("editting entreprise by id");
-            if(entrepriseRepoistory.existsById(id)){
-                Entreprise existedEntreprise = entrepriseRepoistory.findById(id).get();
+            Optional<Entreprise> value=  entrepriseRepoistory.findById(id);
+            if(value.isPresent()){
+                Entreprise existedEntreprise = value.get();
                 existedEntreprise.setName(entreprise.getName());
                 existedEntreprise.setRaisonSocial(entreprise.getRaisonSocial());
                 logger.info("Out editEntrepriseById with success");
@@ -123,7 +132,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
                 return null;
             }
         }catch (Exception e){
-            logger.error("Error in editEntrepriseById causedBy"+e.getMessage());
+            logger.error(e.getMessage());
             return null;
         }
     }
@@ -136,9 +145,14 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             logger.debug("editting entreprise name  by id");
             entrepriseRepoistory.editEntrepriseName(name,id);
             logger.info("Out editEntrepriseNameById with success");
-            return entrepriseRepoistory.findById(id).get();
+            Optional<Entreprise> value =  entrepriseRepoistory.findById(id);
+            if(value.isPresent()){
+                return value.get();
+            }else{
+                return null;
+            }
         }catch (Exception e){
-            logger.error("Error in editEntrepriseNameById causedBy"+e.getMessage());
+            logger.error(e.getMessage());
             return null;
         }
     }
@@ -152,7 +166,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             entrepriseRepoistory.deleteById(entrepriseId);
             logger.info("Out editEntrepriseNameById with success");
         }catch (Exception e){
-            logger.error("Error in deleteEntrepriseById causedBy"+e.getMessage());
+            logger.error(e.getMessage());
         }
 
     }
@@ -166,7 +180,7 @@ public class EntrepriseServiceImpl implements IEntrepriseService{
             entrepriseRepoistory.deleteAll();
             logger.info("Out deleteAllEntreprise with success");
         }catch (Exception e){
-            logger.error("Error in deleteAllEntreprise causedBy"+e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 

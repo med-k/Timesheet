@@ -162,8 +162,6 @@ class EntrepriseServiceImplTest {
         Entreprise edittedEntreprise =new Entreprise("vermeg","assurence");
         logger.info("Mock findById in entrepriserepository");
         Mockito.when(entrepriseRepository.findById(id)).thenReturn(java.util.Optional.of(entreprise));
-        logger.info("Mock existsById in entrepriserepository");
-        Mockito.when(entrepriseRepository.existsById(id)).thenReturn(true);
         logger.info("Mock save in entrepriserepository");
         Mockito.when(entrepriseRepository.save(entreprise)).thenReturn(edittedEntreprise);
         try {
