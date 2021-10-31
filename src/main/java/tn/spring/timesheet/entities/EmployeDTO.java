@@ -21,25 +21,6 @@ public class EmployeDTO {
 
     private boolean isActif;
 
-    @Enumerated(EnumType.STRING)
-    //@NotNull
-    private Role role;
-
-    //@JsonBackReference
-    @JsonIgnore
-    @ManyToMany(mappedBy="employes",fetch=FetchType.EAGER )
-    //@NotNull
-    private List<Departement> departements;
-
-    @JsonIgnore
-    //@JsonBackReference
-    @OneToOne(mappedBy="employe")
-    private Contrat contrat;
-
-    @JsonIgnore
-    //@JsonBackReference
-    @OneToMany(mappedBy="employe")
-    private List<Timesheet> timesheets;
 
 
     public EmployeDTO() {
@@ -51,7 +32,6 @@ public class EmployeDTO {
         this.prenom = prenom;
         this.email = email;
         this.isActif = isActif;
-        this.role = role;
     }
 
     public int getId() {
@@ -93,39 +73,5 @@ public class EmployeDTO {
     public void setActif(boolean isActif) {
         this.isActif = isActif;
     }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public List<Departement> getDepartements() {
-        return departements;
-    }
-
-    public void setDepartements(List<Departement> departement) {
-        this.departements = departement;
-    }
-
-    public Contrat getContrat() {
-        return contrat;
-    }
-
-    public void setContrat(Contrat contrat) {
-        this.contrat = contrat;
-    }
-
-    public List<Timesheet> getTimesheets() {
-        return timesheets;
-    }
-
-    public void setTimesheets(List<Timesheet> timesheets) {
-        this.timesheets = timesheets;
-    }
-
-
 
 }
