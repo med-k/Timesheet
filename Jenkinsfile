@@ -24,13 +24,13 @@ pipeline {
         
         stage("Sonar") {
             steps {
-                bat "mvn sonar:sonar"
+                bat "mvn sonar:sonar -Dsonar.projectKey=Timesheet -Dsonar.host.url=http://localhost:9000 -Dsonar.login=271e61392f44e37461e9d26eb7cf888677019725"
             }
         }
         
         stage("DEPLOY") {
             steps {
-                bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.2 -DgeneratePom=true -Dpackaging=war  -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
+                bat "mvn clean package -Dmaven.test.skip=true deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.2 -DgeneratePom=true -Dpackaging=war  -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
       
