@@ -40,7 +40,7 @@ pipeline {
 Your build has been successful !! 
 
 Best,
-Feres''', subject: 'Devops Project', to: 'mohamedfares.mechmech@gmail.com')
+Feres''', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn')
              }
       
          }}
