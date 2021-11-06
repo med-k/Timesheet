@@ -34,9 +34,7 @@ pipeline {
             }
         }
          stage("Email Notification"){
-        		 steps{emailext body: '''Hi welcome to jenkins email alerts
-            Thanks
-            Feres''', subject: 'timesheet job', to: 'mohamedfares.mechmech@esprit.tn'
+        		 steps{emailext body: 'Le build du projet est exécuté avec succès !!!', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn'
                         }
         	    }
       
