@@ -37,7 +37,7 @@ pipeline {
              steps {
              emailext(attachLog: true, body: '''Hi, 
 
-Your build has been successful !! 
+Your build has been successful !!!!!! 
 
 Best,
 Feres''', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn')
