@@ -33,17 +33,12 @@ pipeline {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
-         stage("Email Notification"){
-             steps {
-             emailext(attachLog: true, body: '''Hi, 
-
-Your build has been successful !!!!!! 
-
-Best,
-Feres''', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn')
-             }
-      
-         }}
+        Radhouan Kh
+       stage("email notification") {
+            steps {
+                 emailext body: 'New update comming', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
+            }
+       }}
    
     post {
         always {
