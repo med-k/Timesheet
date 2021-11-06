@@ -31,7 +31,7 @@ pipeline {
         }
         stage("clean and packaging"){
             steps{
-                bat "clean package"
+                bat "mvn clean package"
             }
         }
         stage("DEPLOY") {
