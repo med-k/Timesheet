@@ -3,7 +3,7 @@ package tn.spring.timesheet.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 public class EmployeDTO {
     private static final long serialVersionUID = -1396669830860400871L;
@@ -27,7 +27,7 @@ public class EmployeDTO {
         super();
     }
 
-    public EmployeDTO(String nom, String prenom, String email, boolean isActif, Role role) {
+    public EmployeDTO(String nom, String prenom, String email, boolean isActif) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
