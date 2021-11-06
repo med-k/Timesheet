@@ -24,15 +24,20 @@ pipeline {
                 bat "mvn sonar:sonar -Dsonar.projectKey=timesheet -Dsonar.host.url=http://localhost:9000 -Dsonar.login=66eb66c8b107ea31c937803fc44077efba9fb228"
             }
        }
-       stage("Clean et Packaging")
+       stage("Clean And Packaging")
        {
             steps {
                 bat "mvn clean package"
             }
        }
-       stage("Deploy") {
+       stage("Deploy With Nexus") {
             steps {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-1.0.war"
+            }
+       }
+       stage("email notification") {
+            steps {
+                 emailext body: 'New update comming', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
             }
        }
     }
