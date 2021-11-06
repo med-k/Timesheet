@@ -34,10 +34,12 @@ pipeline {
             }
         }
          stage("Email Notification"){
-        		steps {
-        		emailext body: 'Le build du projet est exécuté avec succès !!!', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn'}
+        		mail bcc: '', body: '''Hi, 
 
-        	    }
+This message is sent from Jenkins. 
+
+Best regards,
+Feres''', cc: '', from: '', replyTo: '', subject: 'Devops Project ', to: 'mohamedfares.mechmech@gmail.com'
       
     }
    
