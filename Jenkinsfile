@@ -36,7 +36,7 @@ pipeline {
          
              stage("email") {
             steps {
-                  emailext body: 'work changed', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Tiùesheet'
+                  emailext body: 'work', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Tiùesheet'
             }
         }
       
