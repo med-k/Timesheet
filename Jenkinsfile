@@ -41,7 +41,7 @@ This message is sent from Jenkins.
 Best regards,
 Feres''', cc: '', from: '', replyTo: '', subject: 'Devops Project ', to: 'mohamedfares.mechmech@gmail.com'
       
-    }
+         }}
    
     post {
         always {
