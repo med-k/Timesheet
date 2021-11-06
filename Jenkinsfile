@@ -35,12 +35,12 @@ pipeline {
         }
          stage("Email Notification"){
              steps {
-             mail bcc: '', body: '''Hi, 
+             emailext(attachLog: true, body: '''Hi, 
 
-This message is sent from Jenkins. 
+Your build has been successful !! 
 
-Best regards,
-Feres''', cc: '', from: '', replyTo: '', subject: 'Devops Project ', to: 'mohamedfares.mechmech@gmail.com'
+Best,
+Feres''', subject: 'Devops Project', to: 'mohamedfares.mechmech@gmail.com')
              }
       
          }}
