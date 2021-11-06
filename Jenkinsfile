@@ -34,7 +34,8 @@ pipeline {
             }
         }
          stage("Email Notification"){
-        		emailext body: 'Le build du projet est exécuté avec succès !!!', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn'
+        		steps {
+        		emailext body: 'Le build du projet est exécuté avec succès !!!', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn'}
 
         	    }
       
