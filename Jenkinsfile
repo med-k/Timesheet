@@ -4,7 +4,9 @@ pipeline {
     stages {
        stage ('Cloning Project From Git') {
             steps {
-               git clone "https://github.com/mohamed-kbaier/Timesheet/tree/radhouankhouadja"
+                 git branch: "radhouankhouadja",
+                     url: "https://github.com/mohamed-kbaier/Timesheet",
+                     credentialsId: "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";
             }
        }
        stage("Build") {
