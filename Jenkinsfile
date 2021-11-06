@@ -6,7 +6,7 @@ pipeline {
     stages {
        stage ('Cloning Project from Git') {
             steps {
-               git clone "https://github.com/mohamed-kbaier/Timesheet/tree/mohamedkbaier"
+               git clone "https://github.com/mohamed-kbaier/Timesheet.git"
             }
         }
 
