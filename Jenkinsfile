@@ -34,12 +34,14 @@ pipeline {
             }
         }
          stage("Email Notification"){
-        		mail bcc: '', body: '''Hi, 
+             steps {
+             mail bcc: '', body: '''Hi, 
 
 This message is sent from Jenkins. 
 
 Best regards,
 Feres''', cc: '', from: '', replyTo: '', subject: 'Devops Project ', to: 'mohamedfares.mechmech@gmail.com'
+             }
       
          }}
    
