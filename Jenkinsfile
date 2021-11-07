@@ -36,7 +36,7 @@ pipeline {
        
        stage("email notification") {
             steps {
-                 emailext body: 'Your Build has run successfully !!!', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
+                 emailext body: 'Your Build has run successfully !!!', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Devops Timesheet-Jenkins'
             }
        }}
    
