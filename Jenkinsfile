@@ -29,7 +29,7 @@ pipeline {
                 bat "mvn sonar:sonar -Dsonar.projectKey=Timesheet -Dsonar.host.url=http://localhost:9000 -Dsonar.login=8bb50f6c9be0c520735c2e07cdecfb8f7e92a3b5"
             }
         }
-        stage("clean and packaging"){
+        stage("Clean and Packaging"){
             steps{
                 bat "mvn clean package"
             }
@@ -39,7 +39,7 @@ pipeline {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
-         stage("email notification") {
+         stage("email notifications") {
                     steps {
                           emailext body: 'work done', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Tiùesheet'
                     }
