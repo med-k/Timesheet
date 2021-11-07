@@ -9,7 +9,7 @@ pipeline {
                echo "Getting Project from Git";
                                git branch: "mohamedkbaier",
                                    url: "https://github.com/mohamed-kbaier/Timesheet",
-                                   credentialsId: "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";
+                                   credentialsId: "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";
             }
         }
 
