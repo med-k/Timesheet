@@ -42,9 +42,11 @@ pipeline {
             }
         }
         stage('Building our image') {
-            steps {
-                sh "docker build -t medk123456/test1 ."
-                }
+            steps{
+                    script {
+                      docker.build registry + ":$BUILD_NUMBER"
+                    }
+                  }
         }
 }
         post{
