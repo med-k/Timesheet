@@ -37,13 +37,9 @@ pipeline {
             }
         }
          
-             stage("email") {
-            steps {
-                  emailext body: 'work ggfu', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Tiùesheet'
-            }
-        }
+
       	
-	         stage('Building our image') {
+	    stage('Building our image') {
             steps{
                  script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
