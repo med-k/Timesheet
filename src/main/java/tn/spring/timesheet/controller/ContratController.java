@@ -25,7 +25,7 @@ public class ContratController {
         return iContratService.addContrat(contrat) ;
     }
 
-    //Get All Contracts
+    //Get All Contracts : http://localhost:8055/SpringMVC/servlet/getallcontracts
     @GetMapping(value = "/getallcontracts")
     @ResponseBody
     public List<Contrat> getAllContrat() {

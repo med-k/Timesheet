@@ -50,14 +50,14 @@ pipeline {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
-         stage('Building our image') {
+         stage('Building our image : DOCKER') {
                     steps{
                          script {
                             dockerImage = docker.build registry + ":$BUILD_NUMBER"
                          }
                     }
                }
-         stage('Deploy our image') {
+         stage('Deploy our image : DOCKER') {
             steps {
                 script {
                              docker.withRegistry( '', registryCredential ) {
@@ -66,7 +66,7 @@ pipeline {
                           }
                     }
                }
-         stage('Cleaning up') {
+         stage('Cleaning up : DOCKER') {
             steps {
                   bat "docker rmi $registry:$BUILD_NUMBER"
                             }
