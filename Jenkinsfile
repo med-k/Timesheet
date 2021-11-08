@@ -6,10 +6,6 @@ pipeline {
     }
     agent any
 
-
-    
-
-
     stages {
        stage ('GIT') {
             steps {
@@ -47,7 +43,7 @@ pipeline {
             }
         }
       	
-	 stage('Building our image') {
+	         stage('Building our image') {
             steps{
                  script {
                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
@@ -70,14 +66,9 @@ pipeline {
             }
     }
        post{
-            always{
-                 emailext body: 'New update comming', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
-    }
-   
-    post {
-        always {
-            cleanWs()
-        }
-    }
-    
-}
+                   always{
+                        emailext body: 'New update comming', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
+                        cleanWs()
+                        }
+                   }
+       }
