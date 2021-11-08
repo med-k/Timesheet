@@ -1,19 +1,24 @@
 pipeline {
 
+    environment {
+    registry = "feresmch/timesheet"
+    registryCredential = 'dockerHub'
+    dockerImage = ''
+    }
     agent any
 
 
     stages {
        stage ('GIT') {
             steps {
-               echo "Getting Project from Git"; 
-                git branch: "Feres_Mechmech", 
+               echo "Getting Project from Git";
+                git branch: "Feres_Mechmech",
                     url: "https://github.com/mohamed-kbaier/Timesheet",
-                    credentialsId: "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"; 
+                    credentialsId: "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";
             }
         }
 
- 
+
         stage("Build") {
             steps {
                 bat "mvn -version"
@@ -21,30 +26,58 @@ pipeline {
                 // sh "mvn clean package -DskipTests" pour une machine linux
             }
         }
-        
-        stage("Sonar") {
+
+        stage("Unit Tests"){
+            steps{
+                bat "mvn test"
+            }
+        }
+
+        stage("Static test : Sonar") {
             steps {
                 bat "mvn sonar:sonar -Dsonar.projectKey=Timesheet -Dsonar.host.url=http://localhost:9000 -Dsonar.login=271e61392f44e37461e9d26eb7cf888677019725"
             }
         }
-        
+
+        stage("Clean and Packaging"){
+            steps{
+                bat "mvn clean package"
+            }
+        }
+
         stage("DEPLOY") {
             steps {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
-         stage("Email Notification"){
-        		steps {
-        		emailext body: 'Le build du projet est exécuté avec succès !!!', subject: 'Devops Project', to: 'mohamedfares.mechmech@esprit.tn'}
+         stage('Building our image') {
+            steps{
+                    script {
+                       dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
+                  }
+        }
+        stage('Deploy our image') {
+            steps {
+                    script {
+                            docker.withRegistry( '', registryCredential ) {
+                            dockerImage.push()
+                         }
+                        }
+                    }
+                }
+                stage('Cleaning up') {
+                    steps {
+                        bat "docker rmi $registry:$BUILD_NUMBER"
+                     }
+                }
+     }
 
-        	    }
-      
-    }
-   
     post {
         always {
+             emailext body: 'Your Build has run successfully !!!', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Devops Timesheet-Jenkins'
             cleanWs()
         }
     }
-    
+
 }
