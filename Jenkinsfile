@@ -22,6 +22,12 @@ pipeline {
             }
         }
         
+        stage("Unit Tests"){
+            steps{
+                bat "mvn test"
+            }
+        }
+        
         stage("Sonar") {
             steps {
                 bat "mvn sonar:sonar -Dsonar.projectKey=Timesheet -Dsonar.host.url=http://localhost:9000 -Dsonar.login=271e61392f44e37461e9d26eb7cf888677019725"
