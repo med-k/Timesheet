@@ -3,14 +3,14 @@ services:
   mysql-standalone:
     image: mysql:8.0
     environment:
-      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=radhouan
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=password
     ports:
       - 3306:3306
-  reclamation:
-    image: reclamation:latest
+  timesheet:
+    image: timsheet:latest
     ports:
       - 8055:8055
     restart: unless-stopped
