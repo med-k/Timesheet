@@ -2,7 +2,7 @@ pipeline {
     environment {
     registry = "medk123456/timesheet"
     registryCredential = 'medk123456'
-    dockerImage = 'timesheet_image'
+    dockerImage = ''
     }
     agent any
 
