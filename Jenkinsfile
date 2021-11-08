@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+    registry = "raddane90/timesheet"
+    registryCredential = 'dockerHub'
+    dockerImage = ''
+    }
     agent any
 
     stages {
@@ -35,10 +40,32 @@ pipeline {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=1.0 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-1.0.war"
             }
        }
-       stage("email notification") {
-            steps {
-                 emailext body: 'New update comming', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
+       stage('Building our image') {
+            steps{
+                 script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                 }
             }
        }
+       stage('Deploy our image') {
+             steps {
+                  script {
+                     docker.withRegistry( '', registryCredential ) {
+                     dockerImage.push()
+                      }
+                  }
+            }
+       }
+       stage('Cleaning up') {
+             steps {
+                   bat "docker rmi $registry:$BUILD_NUMBER"
+                    }
+            }
     }
+       post{
+            always{
+                 emailext body: 'New update comming', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Timesheet'
+                 cleanWs()
+                 }
+            }
 }
