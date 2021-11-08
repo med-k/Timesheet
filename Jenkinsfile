@@ -1,5 +1,10 @@
 pipeline {
-
+    
+    environment {
+    registry = "feresmch/timesheet"
+    registryCredential = 'dockerHub'
+    dockerImage = ''
+    }
     agent any
 
 
@@ -45,15 +50,32 @@ pipeline {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
-       
-       stage("email notification") {
+         stage('Building our image') {
+            steps{
+                    script {
+                       dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
+                  }
+        }
+        stage('Deploy our image') {
             steps {
-                 emailext body: 'Your Build has run successfully !!!', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Devops Timesheet-Jenkins'
-            }
-       }}
+                    script {
+                            docker.withRegistry( '', registryCredential ) {
+                            dockerImage.push()
+                         }
+                        }
+                    }
+                }
+                stage('Cleaning up') {
+                    steps {
+                        bat "docker rmi $registry"
+                     }
+                }
+     }
    
     post {
         always {
+             emailext body: 'Your Build has run successfully !!!', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Devops Timesheet-Jenkins'
             cleanWs()
         }
     }
