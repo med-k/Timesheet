@@ -1,5 +1,9 @@
 pipeline {
-
+    environment {
+    registry = "medk123456/timesheet"
+    registryCredential = 'medk123456'
+    dockerImage = ''
+    }
     agent any
 
 
@@ -12,8 +16,6 @@ pipeline {
                                    credentialsId: "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";
             }
         }
-
-
         stage("Build") {
             steps {
                 bat "mvn compile"
@@ -39,7 +41,13 @@ pipeline {
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.spring -DartifactId=timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=war -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/timesheet-0.0.1.war"
             }
         }
-
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
+                }
+        }
 }
         post{
             always{
