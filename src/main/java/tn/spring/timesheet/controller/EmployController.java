@@ -22,7 +22,7 @@ public class EmployController {
         Employe employe = mapper.toEmploye(employeDTO);
         return iEmployeService.addEmploye(employe);
     }
-
+    // http://localhost:8099/SpringMVC/servlet/getAllEmploye
     //get all employe
     @GetMapping(value="/getAllEmploye")
     @ResponseBody

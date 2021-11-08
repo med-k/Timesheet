@@ -1,0 +1,21 @@
+version: "3"
+services:
+  mysql-standalone:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=medk
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=password
+    ports:
+      - 3306:3306
+  timesheet:
+    image: timesheet:latest
+    ports:
+      - 8099:8099
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-standalone
