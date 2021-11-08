@@ -57,11 +57,16 @@ pipeline {
                         }
                     }
                 }
-                stage('Cleaning up') {
-                    steps {
+        stage('Cleaning up') {
+               steps {
                         bat "docker rmi $registry:$BUILD_NUMBER"
                      }
                 }
+        stage('Runnig Application') {
+                       steps {
+                                bat "docker-compose up"
+                             }
+                        }
 }
         post{
             always{
