@@ -1,21 +1,18 @@
 version: "3"
 services:
   mysql-standalone:
-    image: mysql:8.0
+    image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=radhouan
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=ala
+      - MYSQL_USER=sa
+      - MYSQL_PASSWORD=password
     ports:
       - 3306:3306
-  reclamation:
-    image: reclamation:latest
+  timesheet:
+    image: timsheet
     ports:
-      - 8055:8055
+      - 8085:8085
     restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: Dockerfile
     depends_on:
       - mysql-standalone
