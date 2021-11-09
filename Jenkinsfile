@@ -68,7 +68,7 @@ pipeline {
              }
        stage('Pulling Project') {
              steps {
-                    bat "docker pull raddane90/timesheet"
+                    bat "docker pull raddane90/timesheet:14"
                     }
              }
     }
