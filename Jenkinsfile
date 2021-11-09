@@ -71,6 +71,13 @@ pipeline {
                   bat "docker rmi $registry:$BUILD_NUMBER"
                             }
                     }
+
+         stage('Runnig Application : DOCKER') {
+            steps {
+                   bat "docker-compose up"
+                           }
+                    }
+
      }
 
     post {
