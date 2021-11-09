@@ -61,15 +61,15 @@ pipeline {
                    bat "docker rmi $registry:$BUILD_NUMBER"
                     }
             }
-       stage('Runnig Application') {
+       stage('Pulling MySQL') {
              steps {
-                    bat "docker-compose up"
+                    bat "docker pull mysql"
                     }
              }
-       stage('Shutting dwon Application') {
+       stage('Pulling Project') {
              steps {
-                     bat "docker-compose down"
-                  }
+                    bat "docker pull raddane90/timesheet"
+                    }
              }
     }
        post{
