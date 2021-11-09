@@ -66,6 +66,11 @@ pipeline {
                     bat "docker-compose up"
                     }
              }
+       stage('Shutting dwon Application') {
+             teps {
+                     bat "docker-compose down"
+                  }
+             }
     }
        post{
             always{
