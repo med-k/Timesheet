@@ -67,11 +67,6 @@ pipeline {
                                 bat "docker-compose up"
                              }
                         }
-        stage('Application down') {
-                        steps {
-                                 bat "docker-compose down"
-                               }
-                        }
 }
         post{
             always{
