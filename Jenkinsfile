@@ -72,7 +72,11 @@ pipeline {
                             }
                     }
 
-
+        stage('Runnig Application : DOCKER') {
+                     steps {
+                            bat "docker-compose up"
+                            }
+                     }
 
      }
 
