@@ -67,7 +67,7 @@ pipeline {
                     }
              }
        stage('Shutting dwon Application') {
-             teps {
+             steps {
                      bat "docker-compose down"
                   }
              }
