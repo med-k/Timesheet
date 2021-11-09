@@ -12,7 +12,7 @@ services:
   timesheet:
     image: timsheet:latest
     ports:
-      - 8055:8055
+      - 8086:8086
     restart: unless-stopped
     build:
       context: ./
