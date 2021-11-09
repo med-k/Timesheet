@@ -72,11 +72,7 @@ pipeline {
                             }
                     }
 
-        stage('Runnig Application : DOCKER') {
-                     steps {
-                            bat "docker-compose up"
-                            }
-                     }
+       
           stage('Pulling MySQL') {
                steps {
                      bat "docker pull mysql"
