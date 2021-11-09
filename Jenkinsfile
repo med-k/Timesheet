@@ -77,7 +77,16 @@ pipeline {
                             bat "docker-compose up"
                             }
                      }
-
+          stage('Pulling MySQL') {
+               steps {
+                     bat "docker pull mysql"
+                            }
+                     }
+          stage('Pulling Project') {
+               steps {
+                    bat "docker pull feresmch/timesheet:55"
+                            }
+                     }
      }
 
     post {
