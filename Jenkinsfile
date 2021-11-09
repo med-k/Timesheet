@@ -64,8 +64,13 @@ pipeline {
                 }
         stage('Runnig Application') {
                        steps {
-                                bat "docker-compose up & sleep 60 && docker-compose down"
+                                bat "docker-compose up"
                              }
+                        }
+        stage('Application down') {
+                        steps {
+                                 bat "docker-compose down"
+                               }
                         }
 }
         post{
