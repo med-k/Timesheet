@@ -1,7 +1,7 @@
 version: "3"
 services:
   mysql-standalone:
-    image: mysql
+    image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=radhouan
@@ -10,7 +10,7 @@ services:
     ports:
       - 3306:3306
   timesheet:
-    image: timsheet
+    image: raddane90/timesheet:14
     ports:
       - 8055:8055
     restart: unless-stopped
