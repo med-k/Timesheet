@@ -10,9 +10,12 @@ services:
     ports:
       - 3306:3306
   timesheet:
-    image: timsheet
+    image: department:latest
     ports:
       - 8085:8085
     restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile
     depends_on:
       - mysql-standalone
